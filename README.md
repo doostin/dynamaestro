@@ -3,6 +3,8 @@
 DynaMaestro was developed to provide an easier way to access a DynamoDB. A lot
 of the functions use chaining methods to hide away the AWS specific ideology.
 
+[![NPM](https://nodei.co/npm/dynamaestro.png?downloads=true&downloadRank=false&stars=true)](https://nodei.co/npm/dynamaestro/)
+
 ## Installation
 
 ```

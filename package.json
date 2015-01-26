@@ -1,6 +1,6 @@
 {
     "name": "dynamaestro",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "DynaMaestro was developed to provide an easier way to access a DynamoDB. A lot of the functions use chaining methods to hide away the AWS specific ideology.",
     "main": "index.js",
     "scripts": {

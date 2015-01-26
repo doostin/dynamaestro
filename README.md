@@ -3,6 +3,12 @@
 DynaMaestro was developed to provide an easier way to access a DynamoDB. A lot
 of the functions use chaining methods to hide away the AWS specific ideology.
 
+## Installation
+
+```
+npm install dynamaestro
+```
+
 ## Documentation
 
 ### Setup

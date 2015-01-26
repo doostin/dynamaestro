@@ -1,23 +1,34 @@
 {
-  "name": "dynamaestro",
-  "version": "0.1.1",
-  "description": "DynaMaestro was developed to provide an easier way to access a DynamoDB. A lot of the functions use chaining methods to hide away the AWS specific ideology.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "dynamodb",
-    "aws"
-  ],
-  "dependencies": {
-    "aws-sdk": "^2.1.7",
-    "dynamodb-marshaler": "0.1.1",
-    "lodash": "^2.4.1"
-  },
-  "author": {
-    "name": "Dustin Boudreau",
-    "email": "dustin.boudreau@gmail.com"
-  },
-  "license": "MIT"
+    "name": "dynamaestro",
+    "version": "0.1.2",
+    "description": "DynaMaestro was developed to provide an easier way to access a DynamoDB. A lot of the functions use chaining methods to hide away the AWS specific ideology.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/doostin/dynamaestro.git"
+    },
+    "bugs": {
+        "url": "https://github.com/doostin/dynamaestro/issues"
+    },
+    "keywords": [
+        "dynamodb",
+        "dynamo",
+        "aws"
+    ],
+    "dependencies": {
+        "aws-sdk": "^2.1.7",
+        "dynamodb-marshaler": "0.1.1",
+        "lodash": "^2.4.1"
+    },
+    "author": {
+        "name": "Dustin Boudreau",
+        "email": "dustin.boudreau@gmail.com"
+    },
+    "license": {
+        "type": "MIT",
+        "url": "https://raw.githubusercontent.com/doostin/dynamaestro/raw/master/LICENSE"
+    }
 }

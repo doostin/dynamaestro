@@ -42,7 +42,8 @@ npm install dynamaestro
 ## Setup
 
 <!-- Connect -->
-<a name="connect" />
+<a name="connect"></a>
+
 ### connect(credentials, region)
 
 Connnects to the database with supplied credentials and region.
@@ -71,8 +72,10 @@ var ddb = new dynamaestro(config);
 ---------------------------------------
 
 ## Items
+
 <!-- putItem -->
-<a name="putItem" />
+<a name="putItem"></a>
+
 ### putItem()
 
 `putItem()` is a chained function with `table()`, `item()`, and `execute()` chains.
@@ -114,7 +117,8 @@ ddb.putItem()
 ---------------------------------------
 
 <!-- batchWriteItem -->
-<a name="batchWriteItems" />
+<a name="batchWriteItems"></a>
+
 ### batchWriteItems()
 
 `batchWriteItems()` is a chained function with `table()`, `put()`, `del()`, `where()`, and `execute()`. `batchWriteItems()` is used to create and delete multiple items in one call.
@@ -165,7 +169,8 @@ ddb.batchWriteItems()
 ---------------------------------------
 
 <!-- getItem -->
-<a name="getItem" />
+<a name="getItem"></a>
+
 ### getItem()
 
 `getItem()` is a chained function with `table()`, `where()`, `select()`, and
@@ -212,7 +217,8 @@ ddb.getItem()
 ---------------------------------------
 
 <!-- batchGetItem -->
-<a name="batchGetItems" />
+<a name="batchGetItems"></a>
+
 ### batchGetItems()
 
 `batchGetItems()` is a chained function with `table()`, `where()`, `select()`, and
@@ -255,7 +261,8 @@ ddb.batchGetItems()
 ---------------------------------------
 
 <!-- query -->
-<a name="query" />
+<a name="query"></a>
+
 ### query()
 
 `query()` is a chained function with `table()`, `globalIndex()`, `where()`,
@@ -310,7 +317,8 @@ ddb.query()
 ---------------------------------------
 
 <!-- scan -->
-<a name="scan" />
+<a name="scan"></a>
+
 ### scan()
 
 Scan is a chained function with `table()`, `select()`, and `execute()` chains. Scan
@@ -340,7 +348,8 @@ ddb.scan()
 ---------------------------------------
 
 <!-- updateItem -->
-<a name="updateItem" />
+<a name="updateItem"></a>
+
 ### updateItem()
 
 `updateItem()` is a chained function with `table()`, `where()`, `put()`,
@@ -402,7 +411,8 @@ ddb.updateItem()
 ---------------------------------------
 
 <!-- deleteItem -->
-<a name="deleteItem" />
+<a name="deleteItem"></a>
+
 ### deleteItem()
 
 `deleteItem()` is a chained function with `table()`, `where()`, and `execute()`.
@@ -448,7 +458,8 @@ ddb.deleteItem()
 ## Tables
 
 <!-- createTable -->
-<a name="createTable" />
+<a name="createTable"></a>
+
 ### createTable()
 
 `createTable()` is a chained function with `table()`, `key()`, `provision()`, and `execute()`. `createTable()` is used to programatically create a table.
@@ -493,7 +504,8 @@ ddb.createTable()
 ---------------------------------------
 
 <!-- listTables -->
-<a name="listTables" />
+<a name="listTables"></a>
+
 ### listTables(callback)
 
 `listTables()` will return an array of table names.
@@ -513,7 +525,8 @@ ddb.listTables(function(error, response) {
 ---------------------------------------
 
 <!-- describeTable -->
-<a name="describeTable" />
+<a name="describeTable"></a>
+
 ### describeTable(tableName, callback)
 
 `describeTable()` is used to gather data about a table. Great for helping to
@@ -539,11 +552,9 @@ ddb.describeTable("testing3", function(error, response) {
 
 ---------------------------------------
 
-<!-- updateTable -->
-<a name="updateTable" />
-
 <!-- deleteTable -->
-<a name="deleteTable" />
+<a name="deleteTable"></a>
+
 ### deleteTable(tableName, callback)
 
 `deleteTable()` is used to delete a table.
@@ -564,7 +575,8 @@ ddb.deleteTable("tableName", function(error, response) {
 ## Utilities
 
 <!-- whenTableExists -->
-<a name="whenTableExists" />
+<a name="whenTableExists"></a>
+
 ### whenTableExists(tableName, callback)
 
 `whenTableExists()` is used to determine when (NOT IF) a table exists. This is useful
@@ -588,7 +600,8 @@ ddb.whenTableExists("testing3", function(error, response) {
 ---------------------------------------
 
 <!-- whenTableDoesntExist -->
-<a name="whenTableDoesntExist" />
+<a name="whenTableDoesntExist"></a>
+
 ### whenTableDoesntExist(tableName, callback)
 
 `whenTableDoesntExist()` is used to determine when (NOT IF) a table no longer exists. This

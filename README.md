@@ -14,7 +14,7 @@ npm install dynamaestro
 ## Documentation
 
 ### Setup
-* [`connect`](#connect)
+* [`config`](#config)
 
 ### Items
 
@@ -32,7 +32,6 @@ npm install dynamaestro
 * [`createTable`](#createTable)
 * [`listTables`](#listTables)
 * [`describeTable`](#describeTable)
-* [`updateTable`](#updateTable) _(coming soon)_
 * [`deleteTable`](#deleteTable)
 
 ### Utilities
@@ -56,14 +55,17 @@ __Arguments__
 __Example__
 
 ```javascript
-var ddb = require("dynamaestro");
+var dynamaestro = require("dynamaestro");
 
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+var config = {
+    credentials: {
+        "accessKeyId" : "XXXXXXXXXXXXXXXXX",
+        "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    region : "us-west-1"
 };
 
-ddb.connect(credentials, "us-west-1");
+var ddb = new dynamaestro(config);
 ```
 
 ---------------------------------------
@@ -73,7 +75,7 @@ ddb.connect(credentials, "us-west-1");
 <a name="putItem" />
 ### putItem()
 
-`putItem()` is a chained function with `table()`, `item()`, and `save()` chains.
+`putItem()` is a chained function with `table()`, `item()`, and `execute()` chains.
 `putItem()` is used to create a single item from an object. This function will
 handle all of the types currently(as of January 2015) available for AWS.
 
@@ -86,21 +88,12 @@ __Chained Methods__
 * `allowOverwrite()`
     * by default, putItem will not overwrite an item as it is better to update,
     but this override will allow you to use putItem like update.
-* `save(callback)`
+* `execute(callback)`
 	* __callback__ - returned function with `error` and `response`
 
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-var uuid = require("node-uuid");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
 
 var now = new Date();
 
@@ -110,13 +103,11 @@ var testItem = {
     item_id : uuid.v4()
 };
 
-var putItem = new ddb.putItem();
-
-putItem
+ddb.putItem()
     .table("testing3")
     .item(testItem)
-    .save(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        ////handle(error, response);
     });
 ```
 
@@ -126,7 +117,7 @@ putItem
 <a name="batchWriteItems" />
 ### batchWriteItems()
 
-`batchWriteItems()` is a chained function with `table()`, `put()`, `del()`, `where()`, and `save()`. `batchWriteItems()` is used to create and delete multiple items in one call.
+`batchWriteItems()` is a chained function with `table()`, `put()`, `del()`, `where()`, and `execute()`. `batchWriteItems()` is used to create and delete multiple items in one call.
 
 __Chained Methods__
 
@@ -136,24 +127,17 @@ __Chained Methods__
 	* __item__ - the item object that you would like to put on the table.
 * `del()`
 	* No arguments, must be followed by one `.where(...)` for HASH, and another `.where(...)` for a HASH AND RANGE.
-* `where(key, value)`
+* `where(key, value, nextHash)`
 	* __key__ - the key you would like to get
 	* __value__ - the value of that key
-* `save(callback)`
+    * __nextHash__ - (true | false) Lets the function know to move on to another
+    HASH or HASH/RANGE set.
+* `execute(callback)`
 	* __callback__ - function with `error` and `response`
 
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
 var now = new Date();
 
 var testItem = {
@@ -162,21 +146,19 @@ var testItem = {
 	created: now.getTime()
 };
 
-var batchWriteItems = new ddb.batchWriteItems();
-
-batchWriteItems
+ddb.batchWriteItems()
 	.table("tableOne")
-	.del()
+	.delete()
 	.where("user", "bob")
 	.where("item_id", "e313659e-c8ce-4e0c-8fc7-bf01fe514c05")
-	.del()
+	.delete()
 	.where("user", "boudrd", true)
 	.where("item_id", "1fe8a751-7324-4642-8df9-d3a8a4595639")
 	.put(testItem)
 	.table("tableTwo")
 	.put(testItem)
-	.save(function(error, response) {
-		handle(error, response);
+	.execute(function(error, response) {
+		//handle(error, response);
 	});
 ```
 
@@ -187,7 +169,7 @@ batchWriteItems
 ### getItem()
 
 `getItem()` is a chained function with `table()`, `where()`, `select()`, and
-`run()` chains. `getItem()` is used get a specific item based off a HASH key,
+`execute()` chains. `getItem()` is used get a specific item based off a HASH key,
 and optionally a RANGE key.
 
 __Chained Methods__
@@ -199,7 +181,7 @@ __Chained Methods__
     * __value__ - the value of that key
 * `select(atrributes)`
     * __attributes__ - Optional: array of attributes you would like returned
-* `run(callback)`
+* `execute(callback)`
     * __callback__ - function with `error` and `response`
 
 __Examples__
@@ -207,45 +189,23 @@ __Examples__
 ___by HASH & RANGE:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var getItem = new ddb.getItem();
-
-getItem
+ddb.getItem()
     .table("testing2")
     .where("user", "boudrd")
     .where("item_id", "592c7ec9-4835-4c88-9b5f-c09fe11ebf97")
-    .run(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
 ___by HASH only:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var getItem = new ddb.getItem();
-
-getItem
+ddb.getItem()
     .table("testing2")
     .where("item_id", "592c7ec9-4835-4c88-9b5f-c09fe11ebf97")
-    .run(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
@@ -256,7 +216,7 @@ getItem
 ### batchGetItems()
 
 `batchGetItems()` is a chained function with `table()`, `where()`, `select()`, and
-`run()` chains. `getItem()` is used get a specific item based off a HASH key,
+`execute()` chains. `getItem()` is used get a specific item based off a HASH key,
 and optionally a RANGE key.
 
 __Chained Methods__
@@ -270,24 +230,13 @@ __Chained Methods__
     HASH or HASH/RANGE set.
 * `select(atrributes)`
     * __attributes__ - Optional: array of attributes you would like returned
-* `run(callback)`
+* `execute(callback)`
     * __callback__ - function with `error` and `response`
 
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var batchGetItems = new ddb.batchGetItems();
-
-batchGetItems
+ddb.batchGetItems()
     .table("table1")
     .where("user", "username")
     .where("item_id", "018654bf-2a10-4b08-918c-f21b0ca3c204")
@@ -297,8 +246,8 @@ batchGetItems
     .table("table2")
     .where("user", "username")
     .where("item_id", "1211f8fe-2567-44b6-83f0-f82650376a89")
-    .run(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
         cb();
     });
 ```
@@ -310,7 +259,7 @@ batchGetItems
 ### query()
 
 `query()` is a chained function with `table()`, `globalIndex()`, `where()`,
-`select()`, and `run()` chains. `query()` is used get a group of items based off
+`select()`, and `execute()` chains. `query()` is used get a group of items based off
 a HASH key. You can also specify a global index to query off a different index.
 
 __Chained Methods__
@@ -329,7 +278,7 @@ __Chained Methods__
     * __value__ - the value of that key
 * `select(atrributes)`
     * __attributes__ - _optional:_ array of attributes you would like returned
-* `run(callback)`
+* `execute(callback)`
     * __callback__ - function with `error` and `response`
 
 __Examples__
@@ -337,46 +286,24 @@ __Examples__
 ___Standard query off HASH:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var query = new ddb.query();
-
-query
+ddb.query()
     .table("testing3")
     .where("user", "EQ", "username")
-    .run(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
 ___Global Index query:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var query = new ddb.query();
-
-query
+ddb.query()
     .table("testing3")
     .globalIndex("indexName")
     .where("user", "EQ", "username")
     .where("created", "BETWEEN", ["1422048000000","1422049000000"])
-    .run(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
@@ -386,7 +313,7 @@ query
 <a name="scan" />
 ### scan()
 
-Scan is a chained function with `table()`, `select()`, and `run()` chains. Scan
+Scan is a chained function with `table()`, `select()`, and `execute()` chains. Scan
 is used get the items of an entire database. Better to avoid using scan wherever
 possible, and to use query instead.
 
@@ -396,28 +323,17 @@ __Chained Methods__
     * __tableName__ - the name of the table that you'd like to scan
 * `select(atrributes)`
     * __attributes__ - Optional: array of attributes you would like returned
-* `run(callback)`
+* `execute(callback)`
     * __callback__ - function with `error` and `response`
 
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var scan = new ddb.scan();
-
-scan
+ddb.scan()
     .table("testing2")
     .select(["user","item_id"])
-    .run(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
@@ -428,7 +344,7 @@ scan
 ### updateItem()
 
 `updateItem()` is a chained function with `table()`, `where()`, `put()`,
-`increment()`, `delete()`, and `save()` chains. `updateItem()` is used to update
+`increment()`, `delete()`, and `execute()` chains. `updateItem()` is used to update
 a specific item. You can __put__ new keys, __put__ existing keys, __increment__
 numbers and __delete__ existing keys.
 
@@ -447,7 +363,7 @@ __Chained Methods__
     * __value__ - the value that you would like to increment key by
 * `delete(key)`
     * __key__ - the key you would like to delete
-* `save(callback)`
+* `execute(callback)`
     * __callback__ - function with `error` and `response`
 
 __Examples__
@@ -455,44 +371,22 @@ __Examples__
 ___by HASH only:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var updateItem = new ddb.getItem();
-
-updateItem
+ddb.updateItem()
     .table("testing3")
     .where("id", "someId")
     .put("updated", now.getTime())
     .put("good", "stuff")
     .increment("numberOfThings", 50)
     .delete("someKey")
-    .save(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
 ___by HASH & RANGE:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var updateItem = new ddb.getItem();
-
-updateItem
+ddb.updateItem()
     .table("testing3")
     .where("user", "username")
     .where("item_id", "uniqueID")
@@ -500,8 +394,8 @@ updateItem
     .put("good", "stuff")
     .increment("numberOfThings", 50)
     .delete("someKey")
-    .save(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
@@ -511,7 +405,7 @@ updateItem
 <a name="deleteItem" />
 ### deleteItem()
 
-`deleteItem()` is a chained function with `table()`, `where()`, and `destroy()`.
+`deleteItem()` is a chained function with `table()`, `where()`, and `execute()`.
 `deleteItem()` is used to delete a specific item.
 
 __Chained Methods__
@@ -521,7 +415,7 @@ __Chained Methods__
 * `where(key, value)`
     * __key__ - the key you would like to delete an item in
     * __value__ - the value of that key
-* `destroy(callback)`
+* `execute(callback)`
     * __callback__ - function with `error` and `response`
 
 __Examples__
@@ -529,45 +423,23 @@ __Examples__
 ___by HASH only:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var deleteItem = new ddb.deleteItem();
-
-deleteItem
+ddb.deleteItem()
     .table("testing3")
     .where("id", "someId")
-    .destroy(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
 ___by HASH & RANGE:___
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var deleteItem = new ddb.deleteItem();
-
-deleteItem
+ddb.deleteItem()
     .table("testing3")
     .where("user", "username")
     .where("item_id", "9d3063b8-2822-4bc7-a3ca-9af2ba8f1032")
-    .destroy(function(error, response) {
-        handle(error, response);
+    .execute(function(error, response) {
+        //handle(error, response);
     });
 ```
 
@@ -579,11 +451,11 @@ deleteItem
 <a name="createTable" />
 ### createTable()
 
-`createTable()` is a chained function with `name()`, `key()`, `provision()`, and `run()`. `createTable()` is used to programatically create a table.
+`createTable()` is a chained function with `table()`, `key()`, `provision()`, and `execute()`. `createTable()` is used to programatically create a table.
 
 __Chained Methods__
 
-* `name(tableName)`
+* `table(tableName)`
     * __tableName__ - the name of the table that you'd like to create
 * `key(type, value, keyType, indexType, indexName)`
     * __type__ - (string | number)
@@ -596,25 +468,14 @@ __Chained Methods__
 	 * __writeCapacity__ - Provisioned throughput capacity you want to reserve for writes.
 	 * __indexType__ - _optional:_ (global | local)
     * __indexName__ - _optional:_ Name of global or local index
-* `run(callback)`
+* `execute(callback)`
     * __callback__ - function returned with `error` and `response`
 
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
-var createTable = new ddb.createTable();
-
-createTable
-	.name("dustinsTable")
+ddb.createTable()
+	.table("tableName")
 	.key("string", "user", "hash")
 	.key("string", "itemId", "range")
 	.provision(5,5)
@@ -624,8 +485,8 @@ createTable
 	.key("string", "user", "hash", "local", "byUserByCount")
 	.key("string", "count", "range", "local", "byUserByCount")
 	.provision(5, 5)
-	.run(function(error, response) {
-		handle(error, response);
+	.execute(function(error, response) {
+		//handle(error, response);
 	});
 ```
 
@@ -644,17 +505,8 @@ __Arguments__
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
 ddb.listTables(function(error, response) {
-	handle(error, response);
+	//handle(error, response);
 });
 ```
 
@@ -676,15 +528,6 @@ __Arguments__
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
 ddb.describeTable("testing3", function(error, response) {
     if(error && error.code === "ResourceNotFoundException") {
         // table doesn't exist
@@ -713,17 +556,8 @@ __Arguments__
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
 ddb.deleteTable("tableName", function(error, response) {
-	handle(error, response);
+	//handle(error, response);
 });
 ```
 
@@ -746,17 +580,8 @@ __Arguments__
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
 ddb.whenTableExists("testing3", function(error, response) {
-    handle(error, response);
+    //handle(error, response);
 });
 ```
 
@@ -779,17 +604,8 @@ __Arguments__
 __Example__
 
 ```js
-var ddb = require("dynamaestro");
-
-var credentials = {
-    "accessKeyId" : "XXXXXXXXXXXXXXXXX",
-    "secretAccessKey" : "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-ddb.connect(credentials, "us-west-1");
-
 ddb.whenTableDoesntExist("testing3", function(error, response) {
-    handle(error, response);
+    //handle(error, response);
 });
 ```
 

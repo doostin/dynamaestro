@@ -42,9 +42,9 @@ npm install dynamaestro
 ## Setup
 
 <!-- Connect -->
-<a name="connect"></a>
+<a name="config"></a>
 
-### connect(credentials, region)
+### Config
 
 Connnects to the database with supplied credentials and region.
 
@@ -254,7 +254,6 @@ ddb.batchGetItems()
     .where("item_id", "1211f8fe-2567-44b6-83f0-f82650376a89")
     .execute(function(error, response) {
         //handle(error, response);
-        cb();
     });
 ```
 

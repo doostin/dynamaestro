@@ -1,0 +1,10 @@
+{
+	"options": {
+		"credentials": {
+			"accessKeyId": "XXXXXXXXXXXXXXXXXX",
+			"secretAccessKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+		},
+		"region": "us-west-1"
+	},
+	"tableName": "testTable"
+}

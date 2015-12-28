@@ -1,0 +1,23 @@
+{
+	"rules": {
+		"indent": [2, "tab", {"SwitchCase": 1}],
+		"quotes": [2, "double"],
+		"linebreak-style": [2, "unix"],
+		"semi": [2, "always"],
+		"no-console": 1,
+		"comma-dangle": [2, "never"],
+		"eqeqeq": [2, "allow-null"],
+		"vars-on-top": 0,
+		"camelcase": [0, {
+			"properties": "always"
+		}]
+	},
+	"globals": {
+		"describe": true,
+		"it": true
+	},
+	"env": {
+		"node": true
+	},
+	"extends": "eslint:recommended"
+}

@@ -1,6 +1,4 @@
 var assert = require("chai").assert;
-var expect = require("chai").expect;
-var should = require("chai").should();
 var _ = require("lodash");
 var dynamaestro = require("../index.js");
 var config = require("./config.json");
@@ -86,6 +84,70 @@ describe("Table Tests", function() {
 		});
 	});
 
+	describe("#updateTable()", function() {
+		it("Table should be in \"UPDATING\" status", function(done) {
+			ddb.updateTable()
+				.table(config.tableName)
+				.provision(10, 5)
+				.provision(20, 10, "global", "userByCount")
+				.execute(function(error, response) {
+					if (error) return done(error);
+					assert.equal("UPDATING", response.TableDescription.TableStatus);
+					done();
+				});
+		});
+		it("Table's main ProvisionedThroughput should be updated.", function(done) {
+			this.timeout(200000);
+			var interval;
+			var count = 0;
+			interval = setInterval(function() {
+				if(count < 25) {
+					count++;
+					ddb.describeTable(config.tableName, function(error, response) {
+						if(error) {
+							clearInterval(interval);
+							return done(error);
+						}
+						if(response.Table.TableStatus === "ACTIVE") {
+							assert.equal(10, response.Table.ProvisionedThroughput.ReadCapacityUnits);
+							assert.equal(5, response.Table.ProvisionedThroughput.WriteCapacityUnits);
+							clearInterval(interval);
+							return done();
+						}
+					});
+				} else {
+					clearInterval(interval);
+					return done(new Error("After 25 tries, table never had ProvisionedThroughput updated"));
+				}
+			}, 20000);
+		});
+		it("Table's globalIndex ProvisionedThroughput should be updated.", function(done) {
+			this.timeout(200000);
+			var interval;
+			var count = 0;
+			interval = setInterval(function() {
+				if(count < 25) {
+					count++;
+					ddb.describeTable(config.tableName, function(error, response) {
+						if(error) {
+							clearInterval(interval);
+							return done(error);
+						}
+						if(response.Table.GlobalSecondaryIndexes[0].IndexStatus === "ACTIVE") {
+							assert.equal(20, response.Table.GlobalSecondaryIndexes[0].ProvisionedThroughput.ReadCapacityUnits);
+							assert.equal(10, response.Table.GlobalSecondaryIndexes[0].ProvisionedThroughput.WriteCapacityUnits);
+							clearInterval(interval);
+							return done();
+						}
+					});
+				} else {
+					clearInterval(interval);
+					return done(new Error("After 25 tries, table never had ProvisionedThroughput updated"));
+				}
+			}, 20000);
+		});
+	});
+
 	describe("#listTables()", function() {
 		it("Table list should contain " + "\"" + config.tableName + "\"", function(done) {
 			ddb.listTables(function(error, response) {
@@ -97,7 +159,6 @@ describe("Table Tests", function() {
 	});
 
 	describe("#describeTable()", function() {
-
 		it("Should return a table object with Table.TableName equal to \"" + config.tableName + "\"", function(done) {
 			ddb.describeTable(config.tableName, function(error, response) {
 				if (error) return done(error);

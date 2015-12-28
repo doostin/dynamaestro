@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2015-02-02 19:42:33</td>
+            <td class="headerValue">2015-12-28 15:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -60,48 +60,44 @@
       <td>
 <pre class="sourceHeading">          Line data    Source code</pre>
 <pre class="source">
-<a name="1"><span class="lineNum">       1 </span><span class="lineCov">          1 : var aws = require('aws-sdk');</span></a>
-<span class="lineNum">       2 </span>            : 
-<span class="lineNum">       3 </span><span class="lineCov">          1 : module.exports = function(config) {</span>
-<span class="lineNum">       4 </span><span class="lineCov">          2 :         aws.config.update({</span>
-<span class="lineNum">       5 </span>            :                 &quot;accessKeyId&quot; : config.credentials.accessKeyId,
-<span class="lineNum">       6 </span>            :                 &quot;secretAccessKey&quot; : config.credentials.secretAccessKey,
-<span class="lineNum">       7 </span>            :                 &quot;region&quot; : config.region
-<span class="lineNum">       8 </span>            :         });
+<a name="1"><span class="lineNum">       1 </span><span class="lineCov">          1 : var aws = require(&quot;aws-sdk&quot;);</span></a>
+<a name="2"><span class="lineNum">       2 </span><span class="lineCov">          1 : var _ = require(&quot;lodash&quot;);</span></a>
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span><span class="lineCov">          1 : module.exports = function(config) {</span>
+<span class="lineNum">       5 </span><span class="lineCov">          2 :         this.DynamoDB = new aws.DynamoDB(_.merge({apiVersion: &quot;2012-08-10&quot;}, config));</span>
+<span class="lineNum">       6 </span><span class="lineCov">          2 :         this.params = {};</span>
+<span class="lineNum">       7 </span><span class="lineCov">          2 :         return this;</span>
+<span class="lineNum">       8 </span>            : };
 <span class="lineNum">       9 </span>            : 
-<span class="lineNum">      10 </span><span class="lineCov">          2 :         this.DynamoDB = new aws.DynamoDB({apiVersion: '2012-08-10'});</span>
-<span class="lineNum">      11 </span><span class="lineCov">          2 :         this.params = {};</span>
-<span class="lineNum">      12 </span><span class="lineCov">          2 :         return this;</span>
-<span class="lineNum">      13 </span>            : };
-<span class="lineNum">      14 </span>            : 
-<span class="lineNum">      15 </span><span class="lineCov">          1 : module.exports.prototype = {</span>
-<span class="lineNum">      16 </span>            :         getItem: require(&quot;./get-item&quot;),
-<span class="lineNum">      17 </span>            :         scan: require(&quot;./scan&quot;),
-<span class="lineNum">      18 </span>            :         query: require(&quot;./query&quot;),
-<span class="lineNum">      19 </span>            :         globalIndex: require(&quot;./global-index&quot;),
-<span class="lineNum">      20 </span>            :         batchGetItems: require(&quot;./batch-get-items&quot;),
-<span class="lineNum">      21 </span>            :         batchWriteItems: require(&quot;./batch-write-items&quot;),
-<span class="lineNum">      22 </span>            :         putItem: require(&quot;./put-item&quot;),
-<span class="lineNum">      23 </span>            :         updateItem: require(&quot;./update-item&quot;),
-<span class="lineNum">      24 </span>            :         deleteItem: require(&quot;./delete-item&quot;),
-<span class="lineNum">      25 </span>            :         createTable: require(&quot;./create-table&quot;),
-<span class="lineNum">      26 </span>            :         deleteTable: require(&quot;./delete-table&quot;),
-<span class="lineNum">      27 </span>            :         listTables: require(&quot;./list-tables&quot;),
-<span class="lineNum">      28 </span>            :         describeTable: require(&quot;./describe-table&quot;),
-<span class="lineNum">      29 </span>            :         whenTableExists: require(&quot;./when-table-exists&quot;),
-<span class="lineNum">      30 </span>            :         whenTableDoesntExist: require(&quot;./when-table-doesnt-exist&quot;),
-<span class="lineNum">      31 </span>            :         allowOverwrite: require(&quot;./allow-overwrite&quot;),
-<span class="lineNum">      32 </span>            :         item: require(&quot;./item&quot;),
-<span class="lineNum">      33 </span>            :         delete: require(&quot;./delete&quot;),
-<span class="lineNum">      34 </span>            :         put: require(&quot;./put&quot;),
-<span class="lineNum">      35 </span>            :         increment: require(&quot;./increment&quot;),
-<span class="lineNum">      36 </span>            :         table: require(&quot;./table&quot;),
-<span class="lineNum">      37 </span>            :         select: require(&quot;./select&quot;),
-<span class="lineNum">      38 </span>            :         where: require(&quot;./where&quot;),
-<span class="lineNum">      39 </span>            :         execute: require(&quot;./execute&quot;),
-<span class="lineNum">      40 </span>            :         key: require(&quot;./key&quot;),
-<span class="lineNum">      41 </span>            :         provision: require(&quot;./provision&quot;)
-<span class="lineNum">      42 </span>            : };
+<span class="lineNum">      10 </span><span class="lineCov">          1 : module.exports.prototype = {</span>
+<span class="lineNum">      11 </span>            :         getItem: require(&quot;./get-item&quot;),
+<span class="lineNum">      12 </span>            :         scan: require(&quot;./scan&quot;),
+<span class="lineNum">      13 </span>            :         query: require(&quot;./query&quot;),
+<span class="lineNum">      14 </span>            :         globalIndex: require(&quot;./global-index&quot;),
+<span class="lineNum">      15 </span>            :         batchGetItems: require(&quot;./batch-get-items&quot;),
+<span class="lineNum">      16 </span>            :         batchWriteItems: require(&quot;./batch-write-items&quot;),
+<span class="lineNum">      17 </span>            :         putItem: require(&quot;./put-item&quot;),
+<span class="lineNum">      18 </span>            :         updateItem: require(&quot;./update-item&quot;),
+<span class="lineNum">      19 </span>            :         deleteItem: require(&quot;./delete-item&quot;),
+<span class="lineNum">      20 </span>            :         createTable: require(&quot;./create-table&quot;),
+<span class="lineNum">      21 </span>            :         updateTable: require(&quot;./update-table&quot;),
+<span class="lineNum">      22 </span>            :         deleteTable: require(&quot;./delete-table&quot;),
+<span class="lineNum">      23 </span>            :         listTables: require(&quot;./list-tables&quot;),
+<span class="lineNum">      24 </span>            :         describeTable: require(&quot;./describe-table&quot;),
+<span class="lineNum">      25 </span>            :         whenTableExists: require(&quot;./when-table-exists&quot;),
+<span class="lineNum">      26 </span>            :         whenTableDoesntExist: require(&quot;./when-table-doesnt-exist&quot;),
+<span class="lineNum">      27 </span>            :         allowOverwrite: require(&quot;./allow-overwrite&quot;),
+<span class="lineNum">      28 </span>            :         item: require(&quot;./item&quot;),
+<span class="lineNum">      29 </span>            :         delete: require(&quot;./delete&quot;),
+<span class="lineNum">      30 </span>            :         put: require(&quot;./put&quot;),
+<span class="lineNum">      31 </span>            :         increment: require(&quot;./increment&quot;),
+<span class="lineNum">      32 </span>            :         table: require(&quot;./table&quot;),
+<span class="lineNum">      33 </span>            :         select: require(&quot;./select&quot;),
+<span class="lineNum">      34 </span>            :         where: require(&quot;./where&quot;),
+<span class="lineNum">      35 </span>            :         execute: require(&quot;./execute&quot;),
+<span class="lineNum">      36 </span>            :         key: require(&quot;./key&quot;),
+<span class="lineNum">      37 </span>            :         provision: require(&quot;./provision&quot;)
+<span class="lineNum">      38 </span>            : };
 </pre>
       </td>
     </tr>
@@ -110,7 +106,7 @@
 
   <table width="100%" border=0 cellspacing=0 cellpadding=0>
     <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
-    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.11</a></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
   </table>
   <br>
 

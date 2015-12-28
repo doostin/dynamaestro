@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2015-02-02 19:42:33</td>
+            <td class="headerValue">2015-12-28 15:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -64,130 +64,130 @@
 <span class="lineNum">       2 </span>            : 
 <span class="lineNum">       3 </span><span class="lineCov">          1 : module.exports = function(type, value, keyType, indexType, indexName) {</span>
 <span class="lineNum">       4 </span>            : 
-<span class="lineNum">       5 </span>            :     // normalize the type
-<span class="lineNum">       6 </span><span class="lineCov">         14 :     type = type.toUpperCase();</span>
-<span class="lineNum">       7 </span><span class="lineCov">         14 :     switch(type) {</span>
-<span class="lineNum">       8 </span>            :         case &quot;S&quot;:
-<span class="lineNum">       9 </span>            :         case &quot;STRING&quot;:
-<span class="lineNum">      10 </span><span class="lineCov">          9 :             type = &quot;S&quot;;</span>
-<span class="lineNum">      11 </span><span class="lineCov">          9 :             break;</span>
-<span class="lineNum">      12 </span>            :         case &quot;N&quot;:
-<span class="lineNum">      13 </span>            :         case &quot;NUMBER&quot;:
-<span class="lineNum">      14 </span><span class="lineCov">          5 :             type = &quot;N&quot;;</span>
-<span class="lineNum">      15 </span><span class="lineCov">          5 :             break;</span>
-<span class="lineNum">      16 </span>            :     }
+<span class="lineNum">       5 </span>            :         // normalize the type
+<span class="lineNum">       6 </span><span class="lineCov">         14 :         type = type.toUpperCase();</span>
+<span class="lineNum">       7 </span><span class="lineCov">         14 :         switch (type) {</span>
+<span class="lineNum">       8 </span>            :                 case &quot;S&quot;:
+<span class="lineNum">       9 </span>            :                 case &quot;STRING&quot;:
+<span class="lineNum">      10 </span><span class="lineCov">          9 :                         type = &quot;S&quot;;</span>
+<span class="lineNum">      11 </span><span class="lineCov">          9 :                         break;</span>
+<span class="lineNum">      12 </span>            :                 case &quot;N&quot;:
+<span class="lineNum">      13 </span>            :                 case &quot;NUMBER&quot;:
+<span class="lineNum">      14 </span><span class="lineCov">          5 :                         type = &quot;N&quot;;</span>
+<span class="lineNum">      15 </span><span class="lineCov">          5 :                         break;</span>
+<span class="lineNum">      16 </span>            :         }
 <span class="lineNum">      17 </span>            : 
-<span class="lineNum">      18 </span>            :     // normalize the keyType
-<span class="lineNum">      19 </span><span class="lineCov">         14 :     keyType = keyType.toUpperCase();</span>
-<span class="lineNum">      20 </span><span class="lineCov">         14 :     switch(keyType) {</span>
-<span class="lineNum">      21 </span>            :         case &quot;H&quot;:
-<span class="lineNum">      22 </span>            :         case &quot;HASH&quot;:
-<span class="lineNum">      23 </span><span class="lineCov">          7 :             keyType = &quot;HASH&quot;;</span>
-<span class="lineNum">      24 </span><span class="lineCov">          7 :             break;</span>
-<span class="lineNum">      25 </span>            :         case &quot;R&quot;:
-<span class="lineNum">      26 </span>            :         case &quot;RANGE&quot;:
-<span class="lineNum">      27 </span><span class="lineCov">          7 :             keyType = &quot;RANGE&quot;;</span>
-<span class="lineNum">      28 </span><span class="lineCov">          7 :             break;</span>
-<span class="lineNum">      29 </span>            :     }
+<span class="lineNum">      18 </span>            :         // normalize the keyType
+<span class="lineNum">      19 </span><span class="lineCov">         14 :         keyType = keyType.toUpperCase();</span>
+<span class="lineNum">      20 </span><span class="lineCov">         14 :         switch (keyType) {</span>
+<span class="lineNum">      21 </span>            :                 case &quot;H&quot;:
+<span class="lineNum">      22 </span>            :                 case &quot;HASH&quot;:
+<span class="lineNum">      23 </span><span class="lineCov">          7 :                         keyType = &quot;HASH&quot;;</span>
+<span class="lineNum">      24 </span><span class="lineCov">          7 :                         break;</span>
+<span class="lineNum">      25 </span>            :                 case &quot;R&quot;:
+<span class="lineNum">      26 </span>            :                 case &quot;RANGE&quot;:
+<span class="lineNum">      27 </span><span class="lineCov">          7 :                         keyType = &quot;RANGE&quot;;</span>
+<span class="lineNum">      28 </span><span class="lineCov">          7 :                         break;</span>
+<span class="lineNum">      29 </span>            :         }
 <span class="lineNum">      30 </span>            : 
-<span class="lineNum">      31 </span>            :     // if there is no indexType, then it must be a standard KeySchema
-<span class="lineNum">      32 </span><span class="lineCov">         14 :     if (!indexType) {</span>
-<span class="lineNum">      33 </span><span class="lineCov">          6 :         this.params.KeySchema.push({</span>
-<span class="lineNum">      34 </span>            :             AttributeName: value,
-<span class="lineNum">      35 </span>            :             KeyType : keyType
-<span class="lineNum">      36 </span>            :         });
-<span class="lineNum">      37 </span>            :     }
+<span class="lineNum">      31 </span>            :         // if there is no indexType, then it must be a standard KeySchema
+<span class="lineNum">      32 </span><span class="lineCov">         14 :         if (!indexType) {</span>
+<span class="lineNum">      33 </span><span class="lineCov">          6 :                 this.params.KeySchema.push({</span>
+<span class="lineNum">      34 </span>            :                         AttributeName: value,
+<span class="lineNum">      35 </span>            :                         KeyType: keyType
+<span class="lineNum">      36 </span>            :                 });
+<span class="lineNum">      37 </span>            :         }
 <span class="lineNum">      38 </span>            : 
-<span class="lineNum">      39 </span>            :     // if the indexType is global, create a global keySchema.
-<span class="lineNum">      40 </span><span class="lineCov">         14 :     if (indexType === &quot;global&quot;) {</span>
+<span class="lineNum">      39 </span>            :         // if the indexType is global, create a global keySchema.
+<span class="lineNum">      40 </span><span class="lineCov">         14 :         if (indexType === &quot;global&quot;) {</span>
 <span class="lineNum">      41 </span>            : 
-<span class="lineNum">      42 </span>            :         // instantiate the GlobalSecondaryIndexes array if it doesn't already exist
-<span class="lineNum">      43 </span><span class="lineCov">          4 :         this.params.GlobalSecondaryIndexes = this.params.GlobalSecondaryIndexes || [];</span>
+<span class="lineNum">      42 </span>            :                 // instantiate the GlobalSecondaryIndexes array if it doesn't already exist
+<span class="lineNum">      43 </span><span class="lineCov">          4 :                 this.params.GlobalSecondaryIndexes = this.params.GlobalSecondaryIndexes || [];</span>
 <a name="44"><span class="lineNum">      44 </span>            : </a>
-<span class="lineNum">      45 </span>            :         // check to see if a globalIndex with the indexName has already been created
-<span class="lineNum">      46 </span><span class="lineCov">          4 :         var globalIndexExists = _.findIndex(this.params.GlobalSecondaryIndexes, function(globalIndex) {</span>
-<span class="lineNum">      47 </span><span class="lineCov">          2 :             return globalIndex.IndexName === indexName;</span>
-<span class="lineNum">      48 </span>            :         });
+<span class="lineNum">      45 </span>            :                 // check to see if a globalIndex with the indexName has already been created
+<span class="lineNum">      46 </span><span class="lineCov">          4 :                 var globalIndexExists = _.findIndex(this.params.GlobalSecondaryIndexes, function(globalIndex) {</span>
+<span class="lineNum">      47 </span><span class="lineCov">          2 :                         return globalIndex.IndexName === indexName;</span>
+<span class="lineNum">      48 </span>            :                 });
 <span class="lineNum">      49 </span>            : 
-<span class="lineNum">      50 </span>            :         // if a globalIndex with the indexName hasn't been created, create it.
-<span class="lineNum">      51 </span><span class="lineCov">          4 :         if (globalIndexExists === -1) {</span>
-<span class="lineNum">      52 </span><span class="lineCov">          2 :             this.params.GlobalSecondaryIndexes.push({</span>
-<span class="lineNum">      53 </span>            :                 IndexName: indexName,
-<span class="lineNum">      54 </span>            :                 KeySchema: [{
-<span class="lineNum">      55 </span>            :                     AttributeName: value,
-<span class="lineNum">      56 </span>            :                     KeyType: keyType
-<span class="lineNum">      57 </span>            :                 }],
-<span class="lineNum">      58 </span>            :                 Projection: {
-<span class="lineNum">      59 </span>            :                     ProjectionType: &quot;ALL&quot;
-<span class="lineNum">      60 </span>            :                 },
-<span class="lineNum">      61 </span>            :                 ProvisionedThroughput: {
-<span class="lineNum">      62 </span>            :                     ReadCapacityUnits: 1,
-<span class="lineNum">      63 </span>            :                     WriteCapacityUnits: 1
-<span class="lineNum">      64 </span>            :                 }
-<span class="lineNum">      65 </span>            :             });
-<span class="lineNum">      66 </span>            :         }
+<span class="lineNum">      50 </span>            :                 // if a globalIndex with the indexName hasn't been created, create it.
+<span class="lineNum">      51 </span><span class="lineCov">          4 :                 if (globalIndexExists === -1) {</span>
+<span class="lineNum">      52 </span><span class="lineCov">          2 :                         this.params.GlobalSecondaryIndexes.push({</span>
+<span class="lineNum">      53 </span>            :                                 IndexName: indexName,
+<span class="lineNum">      54 </span>            :                                 KeySchema: [{
+<span class="lineNum">      55 </span>            :                                         AttributeName: value,
+<span class="lineNum">      56 </span>            :                                         KeyType: keyType
+<span class="lineNum">      57 </span>            :                                 }],
+<span class="lineNum">      58 </span>            :                                 Projection: {
+<span class="lineNum">      59 </span>            :                                         ProjectionType: &quot;ALL&quot;
+<span class="lineNum">      60 </span>            :                                 },
+<span class="lineNum">      61 </span>            :                                 ProvisionedThroughput: {
+<span class="lineNum">      62 </span>            :                                         ReadCapacityUnits: 1,
+<span class="lineNum">      63 </span>            :                                         WriteCapacityUnits: 1
+<span class="lineNum">      64 </span>            :                                 }
+<span class="lineNum">      65 </span>            :                         });
+<span class="lineNum">      66 </span>            :                 }
 <span class="lineNum">      67 </span>            : 
-<span class="lineNum">      68 </span>            :         // if a globalIndex with the indexName has been created, add to it
-<span class="lineNum">      69 </span><span class="lineCov">          4 :         if (globalIndexExists !== -1) {</span>
-<span class="lineNum">      70 </span><span class="lineCov">          2 :             this.params.GlobalSecondaryIndexes[globalIndexExists].KeySchema.push({</span>
-<span class="lineNum">      71 </span>            :                 AttributeName: value,
-<span class="lineNum">      72 </span>            :                 KeyType: keyType
-<span class="lineNum">      73 </span>            :             });
-<span class="lineNum">      74 </span>            :         }
+<span class="lineNum">      68 </span>            :                 // if a globalIndex with the indexName has been created, add to it
+<span class="lineNum">      69 </span><span class="lineCov">          4 :                 if (globalIndexExists !== -1) {</span>
+<span class="lineNum">      70 </span><span class="lineCov">          2 :                         this.params.GlobalSecondaryIndexes[globalIndexExists].KeySchema.push({</span>
+<span class="lineNum">      71 </span>            :                                 AttributeName: value,
+<span class="lineNum">      72 </span>            :                                 KeyType: keyType
+<span class="lineNum">      73 </span>            :                         });
+<span class="lineNum">      74 </span>            :                 }
 <span class="lineNum">      75 </span>            : 
-<span class="lineNum">      76 </span>            :     }
+<span class="lineNum">      76 </span>            :         }
 <span class="lineNum">      77 </span>            : 
-<span class="lineNum">      78 </span>            :     // if the indexType is local, create a local keySchema
-<span class="lineNum">      79 </span><span class="lineCov">         14 :     if (indexType === &quot;local&quot;) {</span>
+<span class="lineNum">      78 </span>            :         // if the indexType is local, create a local keySchema
+<span class="lineNum">      79 </span><span class="lineCov">         14 :         if (indexType === &quot;local&quot;) {</span>
 <span class="lineNum">      80 </span>            : 
-<span class="lineNum">      81 </span>            :         // instantiate the LocalSecondaryIndexes array if it doesn't already exist
-<span class="lineNum">      82 </span><span class="lineCov">          4 :         this.params.LocalSecondaryIndexes = this.params.LocalSecondaryIndexes || [];</span>
+<span class="lineNum">      81 </span>            :                 // instantiate the LocalSecondaryIndexes array if it doesn't already exist
+<span class="lineNum">      82 </span><span class="lineCov">          4 :                 this.params.LocalSecondaryIndexes = this.params.LocalSecondaryIndexes || [];</span>
 <a name="83"><span class="lineNum">      83 </span>            : </a>
-<span class="lineNum">      84 </span>            :         // check to see if a localIndex with the indexName has already been created
-<span class="lineNum">      85 </span><span class="lineCov">          4 :         var LocalIndexExists = _.findIndex(this.params.LocalSecondaryIndexes, function(localIndex) {</span>
-<span class="lineNum">      86 </span><span class="lineCov">          2 :             return localIndex.IndexName === indexName;</span>
-<span class="lineNum">      87 </span>            :         });
+<span class="lineNum">      84 </span>            :                 // check to see if a localIndex with the indexName has already been created
+<span class="lineNum">      85 </span><span class="lineCov">          4 :                 var LocalIndexExists = _.findIndex(this.params.LocalSecondaryIndexes, function(localIndex) {</span>
+<span class="lineNum">      86 </span><span class="lineCov">          2 :                         return localIndex.IndexName === indexName;</span>
+<span class="lineNum">      87 </span>            :                 });
 <span class="lineNum">      88 </span>            : 
-<span class="lineNum">      89 </span>            :         // if a localIndex with the indexName hasn't been created, create it.
-<span class="lineNum">      90 </span><span class="lineCov">          4 :         if (LocalIndexExists === -1) {</span>
-<span class="lineNum">      91 </span><span class="lineCov">          2 :             this.params.LocalSecondaryIndexes.push({</span>
-<span class="lineNum">      92 </span>            :                 IndexName: indexName,
-<span class="lineNum">      93 </span>            :                 KeySchema: [{
-<span class="lineNum">      94 </span>            :                     AttributeName: value,
-<span class="lineNum">      95 </span>            :                     KeyType: keyType
-<span class="lineNum">      96 </span>            :                 }],
-<span class="lineNum">      97 </span>            :                 Projection: {
-<span class="lineNum">      98 </span>            :                     ProjectionType: &quot;ALL&quot;
-<span class="lineNum">      99 </span>            :                 }
-<span class="lineNum">     100 </span>            :             });
-<span class="lineNum">     101 </span>            :         }
+<span class="lineNum">      89 </span>            :                 // if a localIndex with the indexName hasn't been created, create it.
+<span class="lineNum">      90 </span><span class="lineCov">          4 :                 if (LocalIndexExists === -1) {</span>
+<span class="lineNum">      91 </span><span class="lineCov">          2 :                         this.params.LocalSecondaryIndexes.push({</span>
+<span class="lineNum">      92 </span>            :                                 IndexName: indexName,
+<span class="lineNum">      93 </span>            :                                 KeySchema: [{
+<span class="lineNum">      94 </span>            :                                         AttributeName: value,
+<span class="lineNum">      95 </span>            :                                         KeyType: keyType
+<span class="lineNum">      96 </span>            :                                 }],
+<span class="lineNum">      97 </span>            :                                 Projection: {
+<span class="lineNum">      98 </span>            :                                         ProjectionType: &quot;ALL&quot;
+<span class="lineNum">      99 </span>            :                                 }
+<span class="lineNum">     100 </span>            :                         });
+<span class="lineNum">     101 </span>            :                 }
 <span class="lineNum">     102 </span>            : 
-<span class="lineNum">     103 </span>            :         // if a localIndex with the indexName has been created, add to it.
-<span class="lineNum">     104 </span><span class="lineCov">          4 :         if (LocalIndexExists !== -1) {</span>
-<span class="lineNum">     105 </span><span class="lineCov">          2 :             this.params.LocalSecondaryIndexes[LocalIndexExists].KeySchema.push({</span>
-<span class="lineNum">     106 </span>            :                 AttributeName: value,
-<span class="lineNum">     107 </span>            :                 KeyType: keyType
-<span class="lineNum">     108 </span>            :             });
-<span class="lineNum">     109 </span>            :         }
+<span class="lineNum">     103 </span>            :                 // if a localIndex with the indexName has been created, add to it.
+<span class="lineNum">     104 </span><span class="lineCov">          4 :                 if (LocalIndexExists !== -1) {</span>
+<span class="lineNum">     105 </span><span class="lineCov">          2 :                         this.params.LocalSecondaryIndexes[LocalIndexExists].KeySchema.push({</span>
+<span class="lineNum">     106 </span>            :                                 AttributeName: value,
+<span class="lineNum">     107 </span>            :                                 KeyType: keyType
+<span class="lineNum">     108 </span>            :                         });
+<span class="lineNum">     109 </span>            :                 }
 <span class="lineNum">     110 </span>            : 
-<span class="lineNum">     111 </span>            :     }
+<span class="lineNum">     111 </span>            :         }
 <span class="lineNum">     112 </span>            : 
-<span class="lineNum">     113 </span>            :     // regardless of whether it is a standard, global, or local keySchema, every
-<a name="114"><span class="lineNum">     114 </span>            :     // key has to be accounted for in the AttributeDefinitions, but only once.</a>
-<span class="lineNum">     115 </span>            :     // check to see if it exists.
-<span class="lineNum">     116 </span><span class="lineCov">         14 :     attributeExists = _.findIndex(this.params.AttributeDefinitions, function(def) {</span>
-<span class="lineNum">     117 </span><span class="lineCov">         17 :         return def.AttributeName === value;</span>
-<span class="lineNum">     118 </span>            :     });
+<span class="lineNum">     113 </span>            :         // regardless of whether it is a standard, global, or local keySchema, every
+<a name="114"><span class="lineNum">     114 </span>            :         // key has to be accounted for in the AttributeDefinitions, but only once.</a>
+<span class="lineNum">     115 </span>            :         // check to see if it exists.
+<span class="lineNum">     116 </span><span class="lineCov">         14 :         var attributeExists = _.findIndex(this.params.AttributeDefinitions, function(def) {</span>
+<span class="lineNum">     117 </span><span class="lineCov">         17 :                 return def.AttributeName === value;</span>
+<span class="lineNum">     118 </span>            :         });
 <span class="lineNum">     119 </span>            : 
-<span class="lineNum">     120 </span>            :     // if the AttributeDefinition doesn't exist, then create it.
-<span class="lineNum">     121 </span><span class="lineCov">         14 :     if (attributeExists === -1) {</span>
-<span class="lineNum">     122 </span><span class="lineCov">         10 :         this.params.AttributeDefinitions.push({</span>
-<span class="lineNum">     123 </span>            :             AttributeName : value,
-<span class="lineNum">     124 </span>            :             AttributeType : type
-<span class="lineNum">     125 </span>            :         });
-<span class="lineNum">     126 </span>            :     }
+<span class="lineNum">     120 </span>            :         // if the AttributeDefinition doesn't exist, then create it.
+<span class="lineNum">     121 </span><span class="lineCov">         14 :         if (attributeExists === -1) {</span>
+<span class="lineNum">     122 </span><span class="lineCov">         10 :                 this.params.AttributeDefinitions.push({</span>
+<span class="lineNum">     123 </span>            :                         AttributeName: value,
+<span class="lineNum">     124 </span>            :                         AttributeType: type
+<span class="lineNum">     125 </span>            :                 });
+<span class="lineNum">     126 </span>            :         }
 <span class="lineNum">     127 </span>            : 
-<span class="lineNum">     128 </span><span class="lineCov">         14 :     return this;</span>
+<span class="lineNum">     128 </span><span class="lineCov">         14 :         return this;</span>
 <span class="lineNum">     129 </span>            : };
 </pre>
       </td>
@@ -197,7 +197,7 @@
 
   <table width="100%" border=0 cellspacing=0 cellpadding=0>
     <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
-    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.11</a></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
   </table>
   <br>
 

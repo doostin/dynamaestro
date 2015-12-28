@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">11</td>
-            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">14</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2015-02-02 19:42:33</td>
+            <td class="headerValue">2015-12-28 15:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -68,35 +68,48 @@
 <span class="lineNum">       6 </span>            : // the time of creation.
 <span class="lineNum">       7 </span><span class="lineCov">          1 : module.exports = function(readCapacity, writeCapacity, indexType, indexName) {</span>
 <span class="lineNum">       8 </span>            : 
-<span class="lineNum">       9 </span>            :     // if indexType isn't specified, then update the standard read and write
-<span class="lineNum">      10 </span>            :     // capacities
-<span class="lineNum">      11 </span><span class="lineCov">          5 :     if (!indexType || !indexName) {</span>
-<span class="lineNum">      12 </span><span class="lineCov">          3 :         this.params.ProvisionedThroughput = {</span>
-<span class="lineNum">      13 </span>            :             ReadCapacityUnits: readCapacity,
-<span class="lineNum">      14 </span>            :             WriteCapacityUnits: writeCapacity
-<span class="lineNum">      15 </span>            :         };
-<span class="lineNum">      16 </span>            :     }
+<span class="lineNum">       9 </span>            :         // if indexType isn't specified, then update the standard read and write
+<span class="lineNum">      10 </span>            :         // capacities
+<span class="lineNum">      11 </span><span class="lineCov">          7 :         if (!indexType || !indexName) {</span>
+<span class="lineNum">      12 </span><span class="lineCov">          4 :                 this.params.ProvisionedThroughput = {</span>
+<span class="lineNum">      13 </span>            :                         ReadCapacityUnits: readCapacity,
+<span class="lineNum">      14 </span>            :                         WriteCapacityUnits: writeCapacity
+<span class="lineNum">      15 </span>            :                 };
+<span class="lineNum">      16 </span>            :         }
 <span class="lineNum">      17 </span>            : 
-<span class="lineNum">      18 </span>            :     // if indexType and indexName is specified, then update the global secondary
-<span class="lineNum">      19 </span>            :     // index with &quot;indexName&quot; read and write capacities.
-<span class="lineNum">      20 </span><span class="lineCov">          5 :     if (indexType &amp;&amp; indexName) {</span>
+<span class="lineNum">      18 </span>            :         // if indexType and indexName is specified, then update the global secondary
+<span class="lineNum">      19 </span>            :         // index with &quot;indexName&quot; read and write capacities.
+<span class="lineNum">      20 </span><span class="lineCov">          7 :         if (indexType &amp;&amp; indexName) {</span>
 <a name="21"><span class="lineNum">      21 </span>            : </a>
-<span class="lineNum">      22 </span><span class="lineCov">          2 :         if (indexType === &quot;global&quot; &amp;&amp; this.params.GlobalSecondaryIndexes) {</span>
-<span class="lineNum">      23 </span><span class="lineCov">          2 :             var globalIndexExists = _.findIndex(this.params.GlobalSecondaryIndexes, function(globalIndex) {</span>
-<span class="lineNum">      24 </span><span class="lineCov">          2 :                 return globalIndex.IndexName === indexName;</span>
-<span class="lineNum">      25 </span>            :             });
-<span class="lineNum">      26 </span><span class="lineCov">          2 :             if (globalIndexExists !== -1) {</span>
-<span class="lineNum">      27 </span><span class="lineCov">          2 :                 this.params.GlobalSecondaryIndexes[globalIndexExists].ProvisionedThroughput = {</span>
-<span class="lineNum">      28 </span>            :                     ReadCapacityUnits: readCapacity,
-<span class="lineNum">      29 </span>            :                     WriteCapacityUnits: writeCapacity
-<span class="lineNum">      30 </span>            :                 };
-<span class="lineNum">      31 </span>            :             }
-<span class="lineNum">      32 </span>            :         }
+<span class="lineNum">      22 </span><span class="lineCov">          3 :                 if (indexType === &quot;global&quot; &amp;&amp; this.params.GlobalSecondaryIndexes) {</span>
+<span class="lineNum">      23 </span><span class="lineCov">          2 :                         var globalIndexExists = _.findIndex(this.params.GlobalSecondaryIndexes, function(globalIndex) {</span>
+<span class="lineNum">      24 </span><span class="lineCov">          2 :                                 return globalIndex.IndexName === indexName;</span>
+<span class="lineNum">      25 </span>            :                         });
+<span class="lineNum">      26 </span><span class="lineCov">          2 :                         if (globalIndexExists !== -1) {</span>
+<span class="lineNum">      27 </span><span class="lineCov">          2 :                                 this.params.GlobalSecondaryIndexes[globalIndexExists].ProvisionedThroughput = {</span>
+<span class="lineNum">      28 </span>            :                                         ReadCapacityUnits: readCapacity,
+<span class="lineNum">      29 </span>            :                                         WriteCapacityUnits: writeCapacity
+<span class="lineNum">      30 </span>            :                                 };
+<span class="lineNum">      31 </span>            :                         }
+<span class="lineNum">      32 </span>            :                 }
 <span class="lineNum">      33 </span>            : 
-<span class="lineNum">      34 </span>            :     }
-<span class="lineNum">      35 </span>            : 
-<span class="lineNum">      36 </span><span class="lineCov">          5 :     return this;</span>
-<span class="lineNum">      37 </span>            : };
+<span class="lineNum">      34 </span><span class="lineCov">          3 :                 if (indexType === &quot;global&quot; &amp;&amp; this.currentAction === &quot;updateTable&quot;) {</span>
+<span class="lineNum">      35 </span><span class="lineCov">          1 :                         this.params.GlobalSecondaryIndexUpdates = this.params.GlobalSecondaryIndexUpdates || [];</span>
+<span class="lineNum">      36 </span><span class="lineCov">          1 :                         this.params.GlobalSecondaryIndexUpdates.push({</span>
+<span class="lineNum">      37 </span>            :                                 Update: {
+<span class="lineNum">      38 </span>            :                                         IndexName: indexName,
+<span class="lineNum">      39 </span>            :                                         ProvisionedThroughput: {
+<span class="lineNum">      40 </span>            :                                                 ReadCapacityUnits: readCapacity,
+<span class="lineNum">      41 </span>            :                                                 WriteCapacityUnits: writeCapacity
+<span class="lineNum">      42 </span>            :                                         }
+<span class="lineNum">      43 </span>            :                                 }
+<span class="lineNum">      44 </span>            :                         });
+<span class="lineNum">      45 </span>            :                 }
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span>            :         }
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span><span class="lineCov">          7 :         return this;</span>
+<span class="lineNum">      50 </span>            : };
 </pre>
       </td>
     </tr>
@@ -105,7 +118,7 @@
 
   <table width="100%" border=0 cellspacing=0 cellpadding=0>
     <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
-    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.11</a></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
   </table>
   <br>
 

@@ -8,6 +8,7 @@ var config = require("./config.json");
 var ddb = new dynamaestro(config.options);
 
 var names = ["bob", "jim", "sam", "sally", "jill", "joey", "chloe"];
+var testStrings = ["string1", "string2", "string3", "string4"];
 var now = new Date();
 var tempItem = {
 	"testObj": {
@@ -27,6 +28,7 @@ var testItems = [];
 for (var i = 0; i < 25; i++) {
 	var item = _.cloneDeep(tempItem);
 	item.userId = names[_.random(0, 6)];
+	item.testString = testStrings[_.random(0, 3)];
 	item.itemId = uuid.v4();
 	item.count = i + 200;
 	testItems.push(item);
@@ -222,6 +224,26 @@ describe("Item Tests", function() {
 	});
 
 	describe("#query()", function() {
+		it("Should return array of " + testItems[0].userId + "\'s items where testString is equal to " + testItems[0].testString, function(done) {
+			ddb.query()
+				.table(config.tableName)
+				.where("userId", "EQ", testItems[0].userId)
+				.filter("testString", "=", testItems[0].testString)
+				.execute(function(error, response) {
+					if (error) return done(error);
+
+					var userAndTestStringCorrect = true;
+					_.forEach(response, function(item) {
+						if (item.userId !== testItems[0].userId && item.testString !== testItems[0].testString) {
+							userAndTestStringCorrect = false;
+							return false;
+						}
+					});
+
+					expect(userAndTestStringCorrect).to.be.true();
+					done();
+				});
+		});
 		it("Should return array of " + testItems[0].userId + "\'s items", function(done) {
 			ddb.query()
 				.table(config.tableName)
@@ -232,6 +254,7 @@ describe("Item Tests", function() {
 					var userIsCorrect = true;
 					_.forEach(response, function(item) {
 						if (item.userId !== testItems[0].userId) {
+							userIsCorrect = false;
 							return false;
 						}
 					});

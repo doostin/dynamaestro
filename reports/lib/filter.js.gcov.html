@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">20</td>
-            <td class="headerCovTableEntry">24</td>
-            <td class="headerCovTableEntryMed">83.3 %</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2015-12-31 13:31:46</td>
+            <td class="headerValue">2016-01-02 20:20:03</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -64,40 +64,41 @@
 <a name="2"><span class="lineNum">       2 </span><span class="lineCov">          1 : var numberOfFilters = 0;</span></a>
 <span class="lineNum">       3 </span>            : 
 <span class="lineNum">       4 </span><span class="lineCov">          1 : module.exports = function(name, operator, value) {</span>
-<span class="lineNum">       5 </span><span class="lineCov">          1 :         if(this.currentAction === &quot;scan&quot; || this.currentAction === &quot;query&quot;) {</span>
-<span class="lineNum">       6 </span><span class="lineCov">          1 :                 this.params.FilterExpression = this.params.FilterExpression ? this.params.FilterExpression + &quot; AND &quot; : &quot;&quot;;</span>
-<span class="lineNum">       7 </span><span class="lineCov">          1 :                 this.params.ExpressionAttributeNames = this.params.ExpressionAttributeNames || {};</span>
-<span class="lineNum">       8 </span><span class="lineCov">          1 :                 this.params.ExpressionAttributeValues = this.params.ExpressionAttributeValues || {};</span>
+<span class="lineNum">       5 </span><span class="lineCov">          3 :         if(this.currentAction === &quot;scan&quot; || this.currentAction === &quot;query&quot;) {</span>
+<span class="lineNum">       6 </span><span class="lineCov">          3 :                 this.params.FilterExpression = this.params.FilterExpression ? this.params.FilterExpression + &quot; AND &quot; : &quot;&quot;;</span>
+<span class="lineNum">       7 </span><span class="lineCov">          3 :                 this.params.ExpressionAttributeNames = this.params.ExpressionAttributeNames || {};</span>
+<span class="lineNum">       8 </span><span class="lineCov">          3 :                 this.params.ExpressionAttributeValues = this.params.ExpressionAttributeValues || {};</span>
 <span class="lineNum">       9 </span>            : 
-<span class="lineNum">      10 </span><span class="lineCov">          1 :                 var nameKey = &quot;#name&quot; + numberOfFilters;</span>
-<span class="lineNum">      11 </span><span class="lineCov">          1 :                 var valueKey = &quot;:value&quot; + numberOfFilters;</span>
-<span class="lineNum">      12 </span><span class="lineCov">          1 :                 var comparisonOperator = &quot; &quot; + operator + &quot; &quot;;</span>
-<span class="lineNum">      13 </span><span class="lineCov">          1 :                 var filterExpression = nameKey + comparisonOperator + valueKey;</span>
+<span class="lineNum">      10 </span><span class="lineCov">          3 :                 var nameKey = &quot;#name&quot; + numberOfFilters;</span>
+<span class="lineNum">      11 </span><span class="lineCov">          3 :                 var valueKey = &quot;:value&quot; + numberOfFilters;</span>
+<span class="lineNum">      12 </span><span class="lineCov">          3 :                 var comparisonOperator = &quot; &quot; + operator + &quot; &quot;;</span>
+<span class="lineNum">      13 </span><span class="lineCov">          3 :                 var filterExpression = nameKey + comparisonOperator + valueKey;</span>
 <span class="lineNum">      14 </span>            : 
-<span class="lineNum">      15 </span><span class="lineCov">          1 :                 this.params.FilterExpression = this.params.FilterExpression + filterExpression;</span>
+<span class="lineNum">      15 </span><span class="lineCov">          3 :                 this.params.FilterExpression = this.params.FilterExpression + filterExpression;</span>
 <span class="lineNum">      16 </span>            : 
-<span class="lineNum">      17 </span><span class="lineCov">          1 :                 this.params.ExpressionAttributeNames[nameKey] = name;</span>
+<span class="lineNum">      17 </span><span class="lineCov">          3 :                 this.params.ExpressionAttributeNames[nameKey] = name;</span>
 <span class="lineNum">      18 </span>            : 
-<span class="lineNum">      19 </span><span class="lineCov">          1 :                 this.params.ExpressionAttributeValues[valueKey] = {};</span>
+<span class="lineNum">      19 </span><span class="lineCov">          3 :                 this.params.ExpressionAttributeValues[valueKey] = {};</span>
 <span class="lineNum">      20 </span>            : 
-<span class="lineNum">      21 </span><span class="lineCov">          1 :                 var type;</span>
-<span class="lineNum">      22 </span><span class="lineCov">          1 :                 switch (true) {</span>
+<span class="lineNum">      21 </span><span class="lineCov">          3 :                 var type;</span>
+<span class="lineNum">      22 </span><span class="lineCov">          3 :                 switch (true) {</span>
 <span class="lineNum">      23 </span>            :                         case _.isString(value):
 <span class="lineNum">      24 </span><span class="lineCov">          1 :                                 type = &quot;S&quot;;</span>
 <span class="lineNum">      25 </span><span class="lineCov">          1 :                                 break;</span>
 <span class="lineNum">      26 </span>            :                         case _.isNumber(value):
-<span class="lineNum">      27 </span><span class="lineNoCov">          0 :                                 type = &quot;N&quot;;</span>
-<span class="lineNum">      28 </span><span class="lineNoCov">          0 :                                 break;</span>
-<span class="lineNum">      29 </span>            :                         case _.isBoolean(value):
-<span class="lineNum">      30 </span><span class="lineNoCov">          0 :                                 type = &quot;BOOL&quot;;</span>
-<span class="lineNum">      31 </span><span class="lineNoCov">          0 :                                 break;</span>
-<span class="lineNum">      32 </span>            :                 }
-<span class="lineNum">      33 </span><span class="lineCov">          1 :                 this.params.ExpressionAttributeValues[valueKey][type] = value;</span>
-<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      27 </span><span class="lineCov">          1 :                                 type = &quot;N&quot;;</span>
+<span class="lineNum">      28 </span><span class="lineCov">          1 :                                 value = value.toString();</span>
+<span class="lineNum">      29 </span><span class="lineCov">          1 :                                 break;</span>
+<span class="lineNum">      30 </span>            :                         case _.isBoolean(value):
+<span class="lineNum">      31 </span><span class="lineCov">          1 :                                 type = &quot;BOOL&quot;;</span>
+<span class="lineNum">      32 </span><span class="lineCov">          1 :                                 break;</span>
+<span class="lineNum">      33 </span>            :                 }
+<span class="lineNum">      34 </span><span class="lineCov">          3 :                 this.params.ExpressionAttributeValues[valueKey][type] = value;</span>
 <span class="lineNum">      35 </span>            : 
-<span class="lineNum">      36 </span><span class="lineCov">          1 :                 return this;</span>
-<span class="lineNum">      37 </span>            :         }
-<span class="lineNum">      38 </span>            : };
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span><span class="lineCov">          3 :                 return this;</span>
+<span class="lineNum">      38 </span>            :         }
+<span class="lineNum">      39 </span>            : };
 </pre>
       </td>
     </tr>

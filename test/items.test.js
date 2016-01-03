@@ -29,6 +29,8 @@ for (var i = 0; i < 25; i++) {
 	var item = _.cloneDeep(tempItem);
 	item.userId = names[_.random(0, 6)];
 	item.testString = testStrings[_.random(0, 3)];
+	item.testNumber = _.random(0, 3);
+	item.testBoolean = [true, false][_.random(0, 1)];
 	item.itemId = uuid.v4();
 	item.count = i + 200;
 	testItems.push(item);
@@ -206,7 +208,7 @@ describe("Item Tests", function() {
 				.table(config.tableName)
 				.execute(function(error, response) {
 					if (error) return done(error);
-					assert.equal(false, _.isEmpty(response));
+					assert.equal(false, _.isEmpty(response.Items));
 					done();
 				});
 		});
@@ -217,7 +219,7 @@ describe("Item Tests", function() {
 				.select(["userId", "itemId"])
 				.execute(function(error, response) {
 					if (error) return done(error);
-					assert.equal(2, Object.keys(response[0]).length);
+					assert.equal(2, Object.keys(response.Items[0]).length);
 					done();
 				});
 		});
@@ -233,7 +235,7 @@ describe("Item Tests", function() {
 					if (error) return done(error);
 
 					var userAndTestStringCorrect = true;
-					_.forEach(response, function(item) {
+					_.forEach(response.Items, function(item) {
 						if (item.userId !== testItems[0].userId && item.testString !== testItems[0].testString) {
 							userAndTestStringCorrect = false;
 							return false;
@@ -241,6 +243,46 @@ describe("Item Tests", function() {
 					});
 
 					expect(userAndTestStringCorrect).to.be.true();
+					done();
+				});
+		});
+		it("Should return array of " + testItems[0].userId + "\'s items where testNumber is equal to " + testItems[0].testNumber, function(done) {
+			ddb.query()
+				.table(config.tableName)
+				.where("userId", "EQ", testItems[0].userId)
+				.filter("testNumber", "=", testItems[0].testNumber)
+				.execute(function(error, response) {
+					if (error) return done(error);
+
+					var userAndTestNumberCorrect = true;
+					_.forEach(response.Items, function(item) {
+						if (item.userId !== testItems[0].userId && item.testNumber !== testItems[0].testNumber) {
+							userAndTestNumberCorrect = false;
+							return false;
+						}
+					});
+
+					expect(userAndTestNumberCorrect).to.be.true();
+					done();
+				});
+		});
+		it("Should return array of " + testItems[0].userId + "\'s items where testBoolean is equal to " + testItems[0].testBoolean, function(done) {
+			ddb.query()
+				.table(config.tableName)
+				.where("userId", "EQ", testItems[0].userId)
+				.filter("testBoolean", "=", testItems[0].testBoolean)
+				.execute(function(error, response) {
+					if (error) return done(error);
+
+					var userAndTestBooleanCorrect = true;
+					_.forEach(response.Items, function(item) {
+						if (item.userId !== testItems[0].userId && item.testBoolean !== testItems[0].testBoolean) {
+							userAndTestBooleanCorrect = false;
+							return false;
+						}
+					});
+
+					expect(userAndTestBooleanCorrect).to.be.true();
 					done();
 				});
 		});
@@ -252,13 +294,24 @@ describe("Item Tests", function() {
 					if (error) return done(error);
 
 					var userIsCorrect = true;
-					_.forEach(response, function(item) {
+					_.forEach(response.Items, function(item) {
 						if (item.userId !== testItems[0].userId) {
 							userIsCorrect = false;
 							return false;
 						}
 					});
 					expect(userIsCorrect).to.be.true();
+					done();
+				});
+		});
+		it("Should return array of " + testItems[0].userId + "\'s items, limited to 2", function(done) {
+			ddb.query()
+				.table(config.tableName)
+				.where("userId", "EQ", testItems[0].userId)
+				.limit(2)
+				.execute(function(error, response) {
+					if (error) return done(error);
+					expect(response.Count).to.equal(2);
 					done();
 				});
 		});
@@ -270,7 +323,7 @@ describe("Item Tests", function() {
 				.where("count", "BETWEEN", [100, 500])
 				.execute(function(error, response) {
 					if (error) return done(error);
-					expect(response).to.be.a("array");
+					expect(response.Items).to.be.a("array");
 					done();
 				});
 		});
@@ -282,12 +335,12 @@ describe("Item Tests", function() {
 				.execute(function(error, response) {
 					if (error) return done(error);
 
-					_.forEach(response, function(item) {
+					_.forEach(response.Items, function(item) {
 						if (item.userId !== testItems[6].userId) {
 							return false;
 						}
 					});
-					assert.equal(2, Object.keys(response[0]).length);
+					assert.equal(2, Object.keys(response.Items[0]).length);
 					done();
 				});
 		});
@@ -298,8 +351,8 @@ describe("Item Tests", function() {
 				.where("count", "EQ", testItems[6].count)
 				.execute(function(error, response) {
 					if (error) return done(error);
-					assert.equal(testItems[6].userId, response[0].userId);
-					assert.equal(testItems[6].count, response[0].count);
+					assert.equal(testItems[6].userId, response.Items[0].userId);
+					assert.equal(testItems[6].count, response.Items[0].count);
 					done();
 				});
 		});
@@ -310,7 +363,7 @@ describe("Item Tests", function() {
 				.where("count", "BETWEEN", [0, 500])
 				.execute(function(error, response) {
 					if (error) return done(error);
-					expect(response).to.not.be.empty();
+					expect(response.Items).to.not.be.empty();
 					done();
 				});
 		});

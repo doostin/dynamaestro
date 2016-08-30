@@ -327,6 +327,29 @@ describe("Item Tests", function() {
 					done();
 				});
 		});
+		it("Should return array of " + testItems[6].userId + "\'s items where the items are normal sorted", function(done) {
+			ddb.query()
+				.table(config.tableName)
+				.globalIndex("userByCount")
+				.where("userId", "EQ", testItems[6].userId)
+				.execute(function(error, response) {
+					if (error) return done(error);
+					expect(response.Items[0].count).to.be.below(response.Items[response.Items.length - 1].count);
+					done();
+				});
+		});
+		it("Should return array of " + testItems[6].userId + "\'s items where the items are reverse sorted", function(done) {
+			ddb.query()
+				.table(config.tableName)
+				.globalIndex("userByCount")
+				.where("userId", "EQ", testItems[6].userId)
+				.reverseSort()
+				.execute(function(error, response) {
+					if (error) return done(error);
+					expect(response.Items[0].count).to.be.above(response.Items[response.Items.length - 1].count);
+					done();
+				});
+		});
 		it("Should return array of " + testItems[6].userId + "\'s rows items while selecting userId and itemId", function(done) {
 			ddb.query()
 				.table(config.tableName)

@@ -315,6 +315,25 @@ describe("Item Tests", function() {
 					done();
 				});
 		});
+		it("Should return a second set of items", function(done) {
+			ddb.query()
+				.table(config.tableName)
+				.where("userId", "EQ", testItems[0].userId)
+				.limit(2)
+				.execute(function(error, response) {
+					if (error) return done(error);
+					ddb.query()
+						.table(config.tableName)
+						.where("userId", "EQ", testItems[0].userId)
+						.startKey(response.LastEvaluatedKey)
+						.execute(function(error, secondResponse) {
+							if (error) return done(error);
+							expect(secondResponse.Count).to.be.above(0);
+							expect(secondResponse.Items[0].count).not.to.equal(response.Items[0].count);
+							done();
+						});
+				});
+		});
 		it("Should return array of " + testItems[6].userId + "\'s items where count is between 100 & 500 using a globalIndex", function(done) {
 			ddb.query()
 				.table(config.tableName)
